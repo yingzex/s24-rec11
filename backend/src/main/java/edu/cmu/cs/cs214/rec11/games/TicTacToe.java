@@ -1,8 +1,10 @@
 package edu.cmu.cs.cs214.rec11.games;
 
 /**
- * Lets two humans play a single game of tic-tac-toe.  A typical client will construct a new TicTacToe game,
- * then call {@link #play} repeatedly (with players alternating) until the game is over.
+ * Lets two humans play a single game of tic-tac-toe. A typical client will
+ * construct a new TicTacToe game,
+ * then call {@link #play} repeatedly (with players alternating) until the game
+ * is over.
  *
  * This class is not thread-safe.
  */
@@ -23,21 +25,28 @@ public final class TicTacToe {
     private Player currentPlayer;
     private Player[][] grid;
 
-    /** Creates a new tic-tac-toe game with the board initially empty and player X starting the game. */
+    /**
+     * Creates a new tic-tac-toe game with the board initially empty and player X
+     * starting the game.
+     */
     public TicTacToe() {
         grid = new Player[SIZE][SIZE];
         currentPlayer = Player.X;
     }
 
-    /** Implements a move in a tic-tac-toe game, with the current player playing at the given {@code (x, y)}
+    /**
+     * Implements a move in a tic-tac-toe game, with the current player playing at
+     * the given {@code (x, y)}
      * position on the game board and advancing to the next player's turn.
      *
      * @param x The x-coordinate of the played position
      * @param y The y-coordinate of the played position
      *
-     * @throws NullPointerException if {@code x} or {@code y} is negative or >= {@code SIZE}.
-     * @throws IllegalArgumentException if the given position has previously been played.
-     * @throws IllegalStateException if the game is already over.
+     * @throws NullPointerException     if {@code x} or {@code y} is negative or >=
+     *                                  {@code SIZE}.
+     * @throws IllegalArgumentException if the given position has previously been
+     *                                  played.
+     * @throws IllegalStateException    if the game is already over.
      */
     public void play(int x, int y) {
         if (isOver()) {
@@ -52,27 +61,40 @@ public final class TicTacToe {
         currentPlayer = currentPlayer.opponent();
     }
 
-    /** Returns whether the given {@code (x, y)} position is currently a valid play in the game. */
+    /**
+     * Returns whether the given {@code (x, y)} position is currently a valid play
+     * in the game.
+     */
     public boolean isValidPlay(int x, int y) {
         return grid[x][y] == null && !isOver();
     }
 
     /** Returns the current player (next to play) in the game. */
-    public Player currentPlayer() { return currentPlayer; }
+    public Player currentPlayer() {
+        return currentPlayer;
+    }
 
-    /** Returns the Player who previously played the given {@code (x, y)} position, or {@code null} if the position
+    /**
+     * Returns the Player who previously played the given {@code (x, y)} position,
+     * or {@code null} if the position
      * has not been previously played.
      *
-     * @throws NullPointerException if {@code x} or {@code y} is negative or >= {@code SIZE}.
+     * @throws NullPointerException if {@code x} or {@code y} is negative or >=
+     *                              {@code SIZE}.
      */
-    public Player getSquare(int x, int y) { return grid[x][y]; }
+    public Player getSquare(int x, int y) {
+        return grid[x][y];
+    }
 
     /** Returns whether the game is over. */
     public boolean isOver() {
         return winner() != null || allCellsAreFull();
     }
 
-    /** Returns the winner of the game, or {@code null} if the game is tied or not over. */
+    /**
+     * Returns the winner of the game, or {@code null} if the game is tied or not
+     * over.
+     */
     public Player winner() {
         for (int i = 0; i < SIZE; i++) { // Checks for horizontal wins
             Player possibleWinner = checkWin(0, i, 1, 0);
@@ -90,7 +112,7 @@ public final class TicTacToe {
                 return possibleWinner;
         }
         { // Checks for diagonal-upward wins
-            Player possibleWinner = checkWin(0, SIZE-1, 1, -1);
+            Player possibleWinner = checkWin(0, SIZE - 1, 1, -1);
             if (possibleWinner != null)
                 return possibleWinner;
         }
